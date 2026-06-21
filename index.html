@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Kenangan</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<button id="themeToggle" class="theme-btn">🌙</button>
+
+<div class="profile">
+
+    <img src="images/dinda.jpg" alt="Profile">
+
+    <div class="profile-info">
+
+        <h1>@kenangan</h1>
+
+        <div class="stats">
+
+            <div>
+                <strong>6</strong>
+                <span>Postingan</span>
+            </div>
+
+            <div>
+                <strong>∞</strong>
+                <span>Kenangan</span>
+            </div>
+
+            <div>
+                <strong>❤️</strong>
+                <span>Momen</span>
+            </div>
+
+        </div>
+
+        <div class="bio">
+            Tempat menyimpan foto-foto masa lalu 📸<br>
+            Karena beberapa kenangan terlalu berharga untuk dilupakan.
+        </div>
+
+    </div>
+
+</div>
+
+<div class="tab-menu">
+
+    <div class="tab active" onclick="showTab('photos', this)">
+
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7"/>
+            <rect x="14" y="3" width="7" height="7"/>
+            <rect x="3" y="14" width="7" height="7"/>
+            <rect x="14" y="14" width="7" height="7"/>
+        </svg>
+
+    </div>
+
+    <div class="tab" onclick="showTab('videos', this)">
+
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="5,3 19,12 5,21"/>
+        </svg>
+
+    </div>
+
+</div>
+
+<!-- FOTO -->
+
+<div id="photos-tab">
+
+    <div class="gallery">
+
+        <img src="images/foto1.jpg" onclick="show(this.src)">
+        <img src="images/foto2.jpg" onclick="show(this.src)">
+        <img src="images/foto3.jpg" onclick="show(this.src)">
+        <img src="images/foto4.jpg" onclick="show(this.src)">
+        <img src="images/foto5.jpg" onclick="show(this.src)">
+        <img src="images/foto6.jpg" onclick="show(this.src)">
+
+    </div>
+
+</div>
+
+<!-- VIDEO -->
+
+<div id="videos-tab" style="display:none;">
+
+    <div class="video-gallery">
+
+        <div class="video-card">
+
+            <video
+                poster="images/thumb1.jpg"
+                muted
+                loop
+                playsinline>
+
+                <source src="videos/dinvid.mp4" type="video/mp4">
+
+            </video>
+
+        </div>
+
+        <div class="video-card">
+
+            <video
+                poster="images/thumb2.jpg"
+                muted
+                loop
+                playsinline>
+
+                <source src="videos/dinvid2.mp4" type="video/mp4">
+
+            </video>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- MODAL -->
+
+<div class="modal" id="modal">
+
+    <span class="close" onclick="hide()">×</span>
+
+    <img id="preview">
+
+</div>
+
+<script>
+
+function showTab(tabName, element){
+
+    document.getElementById("photos-tab").style.display="none";
+    document.getElementById("videos-tab").style.display="none";
+
+    document.getElementById(tabName+"-tab").style.display="block";
+
+    document.querySelectorAll(".tab").forEach(tab=>{
+        tab.classList.remove("active");
+    });
+
+    element.classList.add("active");
+}
+
+const modal=document.getElementById("modal");
+const preview=document.getElementById("preview");
+
+function show(src){
+
+    modal.style.display="flex";
+    preview.src=src;
+
+}
+
+function hide(){
+
+    modal.style.display="none";
+
+}
+
+modal.addEventListener("click",(e)=>{
+
+    if(e.target===modal){
+        hide();
+    }
+
+});
+
+const btn=document.getElementById("themeToggle");
+
+btn.addEventListener("click",()=>{
+
+    document.body.classList.toggle("light-mode");
+
+    btn.innerHTML=
+    document.body.classList.contains("light-mode")
+    ? "☀️"
+    : "🌙";
+
+});
+
+document.addEventListener("DOMContentLoaded",()=>{
+
+    const videos=document.querySelectorAll(".video-card video");
+
+    videos.forEach(video=>{
+
+        const card=video.parentElement;
+
+        card.addEventListener("mouseenter",()=>{
+            video.play();
+        });
+
+        card.addEventListener("mouseleave",()=>{
+            video.pause();
+            video.currentTime=0;
+        });
+
+        card.addEventListener("click",()=>{
+
+            if(video.paused){
+                video.play();
+            }else{
+                video.pause();
+            }
+
+        });
+
+    });
+
+});
+
+</script>
+
+</body>
+</html>
